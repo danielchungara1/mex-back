@@ -5,9 +5,11 @@ import ProductRepository from "./ProductRepository";
 @Service()
 class ProductService {
   constructor(private readonly respository: ProductRepository) { }
-  async getAll(): Promise<User[]> {
-    return await this.respository.getAll();
+
+  async getPage(page: Number): Promise<User[]> {
+    return await this.respository.getPage(page);
   }
+
 }
 
 export default ProductService;

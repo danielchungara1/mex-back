@@ -2,9 +2,11 @@ import { Service } from "typedi";
 import Product from "./Product";
 
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 mongoose.connect('mongodb://localhost:27017/test');
 
-const ProductSchema = {
+const ProductSchema = new mongoose.Schema({
   _id: Number,
   description: String,
   price: Number,
@@ -12,7 +14,8 @@ const ProductSchema = {
   imageUrlSm: String,
   imageUrlMd: String,
   imageUrlLg: String,
-}
+});
+ProductSchema.plugin(mongoosePaginate);
 
 const ProductModel = mongoose.model('Product', ProductSchema);
 
@@ -22,8 +25,8 @@ class ProductRepository {
   constructor () {
   }
 
-  async getAll(): Promise<Product[]> {
-    return ProductModel.find();
+  async getPage(page: Number): Promise<Product[]> {
+    return ProductModel.paginate({}, {page});
   }
 
 }

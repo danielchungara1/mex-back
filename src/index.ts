@@ -12,7 +12,7 @@ const main = async () => {
 
   const productController = Container.get(ProductController);
 
-  app.get('/products', (req, res) => productController.getAll(req, res));
+  app.get('/products', (req, res) => productController.getPage(req, res));
 
   const SERVER_PORT = 3001;
   app.listen(SERVER_PORT, () => {
