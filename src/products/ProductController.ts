@@ -11,10 +11,13 @@ class ProductController {
 
     const page: Number = _req.query.page ? Number(_req.query.page) : 1;
     const searchText: String = _req.query.searchText ? String(_req.query.searchText) : '';
-
-    const result = await this.service.getPage({page, searchText});
+    const sort: String = _req.query.sort ? (String(_req.query.sort)).split(',')[0]: 'description';
+    const direction: String = _req.query.sort ? (String(_req.query.sort)).split(',')[1]: 'ASC';
+    const available = String(_req.query.available) === 'true' ? true : false;    
     
-    return res.json(result);
+    const result = await this.service.getPage({page, searchText, sort, direction, available});
+    
+    return res.json(result);    
 
   }
 

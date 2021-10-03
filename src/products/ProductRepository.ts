@@ -8,11 +8,16 @@ class ProductRepository {
   constructor() { }
 
   async getPage(options: SearchOptions) {
+    
     return ProductModel.paginate(
       {
-        description: { $regex: '.*' + options.searchText + '.*', $options: 'i' }
+        description: { $regex: '.*' + options.searchText + '.*', $options: 'i' },                
+        ...(options.available && {stock: {$gt: 0}})
       },
-      { page: options.page }
+      { 
+        page: options.page,
+        sort: `${options.direction==='DESC'?'-':''}${options.sort}`        
+      }
     );
   }
 
