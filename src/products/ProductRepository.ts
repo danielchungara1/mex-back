@@ -1,13 +1,19 @@
 import { Service } from "typedi";
 import ProductModel from "./ProductModel";
+import { SearchOptions } from "./SearchOptions";
 
 @Service()
 class ProductRepository {
 
-  constructor () {}
+  constructor() { }
 
-  async getPage(page: Number) {
-    return ProductModel.paginate({}, {page});
+  async getPage(options: SearchOptions) {
+    return ProductModel.paginate(
+      {
+        description: { $regex: '.*' + options.searchText + '.*', $options: 'i' }
+      },
+      { page: options.page }
+    );
   }
 
 }

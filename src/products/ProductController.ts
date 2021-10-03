@@ -10,8 +10,9 @@ class ProductController {
   async getPage(_req: Request, res: Response) {
 
     const page: Number = _req.query.page ? Number(_req.query.page) : 1;
+    const searchText: String = _req.query.searchText ? String(_req.query.searchText) : '';
 
-    const result = await this.service.getPage(page);
+    const result = await this.service.getPage({page, searchText});
     
     return res.json(result);
 

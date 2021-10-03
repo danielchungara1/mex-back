@@ -2,16 +2,14 @@ version: "3.7"
 
 services:
   mongo:
-    container_name: mex-mongo
-    image: mongo:latest
-    restart: always
+    container_name: mex-db
+    image: mongo    
     volumes:
       - db_volume:/data/db
     ports:
       - 27017:27017
   app:
-    container_name: mex-app
-    restart: always
+    container_name: mex-back
     build: 
       context: .
       dockerfile: Dockerfile
