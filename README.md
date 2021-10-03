@@ -1,2 +1,10 @@
-# typescript-dependency-injection
-Medium TypeScript Dependency Injection Article Codes
+# Dev Environment
+
+## Init mongodb service
+docker-compose -f db-service.yml up
+
+## Apply migrations
+migrate-mongo up
+
+## Run web server
+npm run dev

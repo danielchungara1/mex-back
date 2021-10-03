@@ -1,23 +1,33 @@
-import express from 'express';
+import express,{ Request,Response } from 'express';
 import 'reflect-metadata';
-import Container from 'typedi';
-import ProductController from './products/ProductController';
+import Connect from './connect';
+import ProductRoutes from './products/ProductRoutes';
 
 var cors = require('cors')
 
-
 const main = async () => {
+
   const app = express();
+  
   app.use(cors())
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-  const productController = Container.get(ProductController);
+  app.get('/',(req: Request, res: Response ) => {
+    console.log(req);
+    res.send('TS App is Running Working')
+  })
 
-  app.get('/products', (req, res) => productController.getPage(req, res));
+  const SERVER_PORT = process.env.PORT || 3001;
+  const db = process.env.MONGO_URL || 'mongodb://localhost:27017/test';
 
-  const SERVER_PORT = 3001;
+  Connect({ db });
+  ProductRoutes(app);
+
   app.listen(SERVER_PORT, () => {
-    console.log('Server started on port ' + SERVER_PORT);
+    console.log('>>> Server started on port ' + SERVER_PORT);
   });
+
 }
 
 main().catch(err => {

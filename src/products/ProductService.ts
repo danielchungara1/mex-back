@@ -1,13 +1,15 @@
 import { Service } from "typedi";
-import User from "./Product";
 import ProductRepository from "./ProductRepository";
 
 @Service()
 class ProductService {
+  
   constructor(private readonly respository: ProductRepository) { }
 
-  async getPage(page: Number): Promise<User[]> {
+  async getPage(page: Number) {
+
     return await this.respository.getPage(page);
+
   }
 
 }
