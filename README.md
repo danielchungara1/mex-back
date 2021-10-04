@@ -8,3 +8,6 @@ migrate-mongo up
 
 ## Run web server
 npm run dev
+
+## For add migrations
+migrate-mongo create insert_mac_products
