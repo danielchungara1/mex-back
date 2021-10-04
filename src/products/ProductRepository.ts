@@ -8,11 +8,14 @@ class ProductRepository {
   constructor() { }
 
   async getPage(options: SearchOptions) {
-    
     return ProductModel.paginate(
       {
         description: { $regex: '.*' + options.searchText + '.*', $options: 'i' },                
-        ...(options.available && {stock: {$gt: 0}})
+        $and: [
+          {price: {$gte: options.minPrice}}, 
+          {price: {$lte: options.maxPrice}}
+        ],
+        ...(options.available && {stock: {$gt: 0}}),
       },
       { 
         page: options.page,

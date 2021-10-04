@@ -4,4 +4,6 @@ export interface SearchOptions {
   sort: String; // description || description || price || price
   direction: String; // ASC || DESC
   available: Boolean;
+  minPrice: Number;
+  maxPrice: Number
 };
